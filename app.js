@@ -1,52 +1,45 @@
-function getComputerChoice(){
-    rps = ['rock', 'paper', 'scissors'];
-    choice = rps[Math.floor(Math.random() * rps.length)];
-    return choice;
+function getComputerChoice() {
+  rps = ['rock', 'paper', 'scissors'];
+  choice = rps[Math.floor(Math.random() * rps.length)];
+  return choice;
+}
+
+let computerScore = 0;
+let playerScore = 0;
+
+function playRound(choice) {
+  playerSelection = choice;
+  computerSelection = getComputerChoice();
+
+  if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
+    document.getElementById('score').innerHTML = 'Invalid input';
   }
-  
-  let computerScore = 0;
-  let playerScore = 0;
-  
-  function playRound(){
-    playerSelection = prompt('Choose rock, paper or scissors: ')
-    playerSelection = playerSelection.toLowerCase();
-    computerSelection = getComputerChoice();
-    console.log(`The computer chose ${computerSelection}`);
-    
-    if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors'){
-      console.log('Invalid input');
-      return;
-    }
-    else if (playerSelection === computerSelection){
-      console.log('It\'s a draw')
-    }
-    else if ((playerSelection === 'rock' && computerSelection === 'scissors') 
-      || (playerSelection === 'scissors' && computerSelection === 'paper')
-      || (playerSelection === 'paper' && computerSelection === 'rock')){
-      console.log(`You win! ${playerSelection} beats ${computerSelection}`)
-      playerScore += 1;
-    }
-    else {
-      console.log(`You lose, ${computerSelection} beats ${playerSelection}`)
-      computerScore += 1;
-    }
+  else if ((playerSelection === 'rock' && computerSelection === 'scissors')
+    || (playerSelection === 'scissors' && computerSelection === 'paper')
+    || (playerSelection === 'paper' && computerSelection === 'rock')) {
+    playerScore += 1;
   }
-  
-  function game(){
-    rounds = parseInt(prompt('How many rounds would you like to play?'))
-    for (i = 0; i < rounds; i++){
-      playRound();
-      console.log(`The score is Player ${playerScore}-${computerScore} Computer`)
-    }
-    if (playerScore > computerScore){
-      console.log('You win!')
-    }
-    else if(playerScore < computerScore){
-      console.log('You lose.')
-    }
-    else {
-      console.log('It\'s a draw.')
-    }
+  else if (playerSelection === computerSelection) {
+    playerScore += 0;
+    computerScore += 0;
   }
-  
-  console.log(game());
+  else {
+    computerScore += 1;
+  }
+
+  document.getElementById('score').innerHTML = `Player ${playerScore} - ${computerScore} Computer`;
+  document.getElementById('selected').innerHTML = `Player chose ${playerSelection}, Computer chose ${computerSelection}`;
+
+  if (playerScore === 5) {
+    document.getElementById('selected').innerHTML = `Player wins!`;
+    computerScore = 0;
+    playerScore = 0;
+    return;
+  }
+  else if (computerScore === 5) {
+    document.getElementById('selected').innerHTML = 'Computer wins!';
+    computerScore = 0;
+    playerScore = 0;
+    return;
+  }
+}
